@@ -1,0 +1,20 @@
+{
+  "name": "todomvc",
+  "description": "A todo app",
+  "main": "index.js",
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "^0.14.7",
+    "fetch": "^0.11.0",
+    "es6-promise": "^3.2.1"
+  }
+}

@@ -1,0 +1,3 @@
+--require test/dom-mock.js
+--require react
+--compilers jsx:babel-register
