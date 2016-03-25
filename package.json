@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "cradle": "^0.7.1",
     "express": "^4.13.4"
   },
   "devDependencies": {
