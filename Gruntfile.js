@@ -1,10 +1,10 @@
-var jsxFileList = ['TodoList.jsx', 
-'AddItem.jsx', 
+var jsxFileList = ['TodoList.jsx',
+'AddItem.jsx',
 'TodoItems.jsx',
 'Item.jsx',
 'Main.jsx'];
 
-var fileList =  ['additem.js', 
+var fileList =  ['additem.js',
 'todoitems.js',
 'todolist.js',
 'item.js',
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
       watch: {
           scripts: {
               files: ['./app/react/**.jsx', './server.js'],
-              tasks: ['jsxbuild'],
+              tasks: ['jsxbuild', 'express:dev'],
               options: {
                   spawn: false
               }
@@ -82,16 +82,16 @@ module.exports = function(grunt) {
             }
         },
         mochaTest: {
-            all: { 
+            all: {
                 options: {
                     require: 'babel-register'
                 },
                 src: ['test/*.js',]
             }
         }
-        
+
   });
-  
+
   grunt.loadNpmTasks('grunt-babel');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-express-server');
@@ -99,7 +99,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-file-append');
   grunt.loadNpmTasks('grunt-mocha-test');
-  
+
   grunt.registerTask('serve', ['concat:dist', 'babel:jsx', 'express:dev', 'watch:scripts']);
   grunt.registerTask('jsxbuild', ['babel:jsx', 'concat']);
   grunt.registerTask('test', ['file_append', 'mochaTest']);

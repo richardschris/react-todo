@@ -12,12 +12,20 @@ app.use('/fetch', express.static('bower_components/fetch'));
 app.use('/es6-promise', express.static('bower_components/es6-promise'));
 app.use(bodyParser.json());
 
+/*
+CouchDB items/allitems view function
+function(doc) { emit(doc.index, {index: doc.index, item: doc.item,
+isfinished: doc.isfinished});}
+
+DB format: {index: integer, item: string, isfinished: boolean}
+*/
+
 cradle.setup({
-    host: '192.168.99.100',
+    host: 'localhost',
     cache: true,
     raw: false,
     forceSave: true,
-    port: 32768 // exposed docker port
+    port: 5984
 });
 
 var c = new(cradle.Connection)();
@@ -40,9 +48,9 @@ app.get('/api', function(req, res){
 
     let todoList = [];
     db.view('items/allitems', function(err, doc) {
-        for (let item of doc) {
+        if (doc) {for (let item of doc) {
             todoList.push(item['value']);
-        }
+        }}
 
         res.setHeader('Content-Type', 'application/json');
         res.json(todoList);
@@ -52,7 +60,6 @@ app.get('/api', function(req, res){
 });
 
 app.post('/api', function(req, res) {
-
     db.save({index: req.body.index, item: req.body.item, isfinished: req.body.isfinished});
 });
 
@@ -66,7 +73,6 @@ app.get('/api/:id(\\d+)/', function(req, res) {
 app.post('/api/:id(\\d+)/', function(req, res) {
 
     db.view('items/allitems', {key: Number(req.params.id)}, function (err, doc)     {
-        console.log(doc[0]);
         doc[0].value.isfinished = req.body.isfinished;
         db.save(doc[0].id, doc[0].value);
     });
